@@ -16,3 +16,22 @@ Blockers / what I'm stuck on:
 
 Plan for tomorrow:
 - Build dynamic spend input form
+
+## Day 2 — 2026-05-07
+
+Hours worked: 3
+
+What I did:
+- Built dynamic spend input form
+- Added multiple tool support
+- Added remove functionality
+- Implemented localStorage persistence
+
+What I learned:
+- Better understanding of React state updates and array handling
+
+Blockers / what I'm stuck on:
+- Need to design audit rules and backend logic
+
+Plan for tomorrow:
+- Build audit engine and savings calculation
