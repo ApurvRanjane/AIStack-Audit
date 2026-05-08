@@ -17,6 +17,7 @@ Blockers / what I'm stuck on:
 Plan for tomorrow:
 - Build dynamic spend input form
 
+
 ## Day 2 — 2026-05-07
 
 Hours worked: 3
@@ -35,3 +36,23 @@ Blockers / what I'm stuck on:
 
 Plan for tomorrow:
 - Build audit engine and savings calculation
+
+
+## Day 3 — 2026-05-08
+
+Hours worked: 4
+
+What I did:
+- Built audit engine logic
+- Added savings calculations
+- Displayed audit results
+- Added recommendation rules
+
+What I learned:
+- Better understanding of dynamic data processing in React
+
+Blockers / what I'm stuck on:
+- Need to improve recommendation accuracy
+
+Plan for tomorrow:
+- Build AI-generated summaries and results page improvements
