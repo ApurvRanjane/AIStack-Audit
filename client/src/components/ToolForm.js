@@ -18,7 +18,7 @@ function ToolForm() {
         ];
   });
   const [results, setResults] = useState([]);
-
+  const [summary, setSummary] = useState("");
   useEffect(() => {
     localStorage.setItem("tools", JSON.stringify(tools));
   }, [tools]);
@@ -90,9 +90,37 @@ function ToolForm() {
         savings,
       });
     });
+    const total = auditResults.reduce(
+  (sum, item) => sum + item.savings,
+  0
+);
 
+generateSummary(auditResults, total);
     setResults(auditResults);
   };
+
+  const generateSummary = (auditResults, totalSavings) => {
+
+  let text = "";
+
+  if (totalSavings > 0) {
+
+    text =
+      `Your organization may be overspending on AI subscriptions. ` +
+      `The audit identified approximately $${totalSavings} in potential monthly savings through better plan optimization and reduced overlap between tools.`;
+
+  }
+
+  else {
+
+    text =
+      "Your current AI spending appears relatively optimized based on the provided inputs.";
+
+  }
+
+  setSummary(text);
+
+};
   const totalSavings = results.reduce((total, item) => total + item.savings, 0);
   return (
     <div>
@@ -169,10 +197,31 @@ function ToolForm() {
       <br />
 
       <button onClick={generateAudit}>Generate Audit</button>
+      {results.length === 0 && (
+  <p>
+    No audit generated yet.
+  </p>
+)}
+
+<div style={{ marginTop: "30px" }}></div>
       <div style={{ marginTop: "30px" }}>
         <h2>Total Monthly Savings: ${totalSavings}</h2>
 
         <h2>Annual Savings: ${totalSavings * 12}</h2>
+        <div
+  style={{
+    border: "1px solid #ccc",
+    padding: "20px",
+    marginBottom: "20px",
+    backgroundColor: "#f5f5f5"
+  }}
+>
+
+  <h2>AI Generated Summary</h2>
+
+  <p>{summary}</p>
+
+</div>
         <h2>Audit Results</h2>
 
         {results.map((result, index) => (
@@ -184,14 +233,19 @@ function ToolForm() {
               marginBottom: "15px",
             }}
           >
-            <h3>{result.tool}</h3>
+           <h3>
+  {result.tool} — {result.plan}
+</h3>
 
             <p>
               Recommendation:
               {result.recommendation}
             </p>
 
-            <p>Potential Savings: ${result.savings}/month</p>
+            <p>Potential Savings:
+<strong>
+  ${result.savings}/month
+</strong></p>
           </div>
         ))}
       </div>
