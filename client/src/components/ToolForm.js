@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 
 function ToolForm() {
+
   const [tools, setTools] = useState(() => {
-    
+
     const savedTools = localStorage.getItem("tools");
 
     return savedTools
@@ -16,22 +17,34 @@ function ToolForm() {
             useCase: "",
           },
         ];
+
   });
+
   const [results, setResults] = useState([]);
+
   const [summary, setSummary] = useState("");
+
+  const [email, setEmail] = useState("");
+  const [shareUrl, setShareUrl] = useState("");
+
   useEffect(() => {
+
     localStorage.setItem("tools", JSON.stringify(tools));
+
   }, [tools]);
 
   const handleChange = (index, event) => {
+
     const values = [...tools];
 
     values[index][event.target.name] = event.target.value;
 
     setTools(values);
+
   };
 
   const addTool = () => {
+
     setTools([
       ...tools,
       {
@@ -42,27 +55,60 @@ function ToolForm() {
         useCase: "",
       },
     ]);
+
   };
 
   const removeTool = (index) => {
+
     const values = [...tools];
 
     values.splice(index, 1);
 
     setTools(values);
+
+  };
+
+  const generateSummary = (auditResults, totalSavings) => {
+
+    let text = "";
+
+    if (totalSavings > 0) {
+
+      text =
+        `Your organization may be overspending on AI subscriptions. ` +
+        `The audit identified approximately $${totalSavings} in potential monthly savings through better plan optimization and reduced overlap between tools.`;
+
+    }
+
+    else {
+
+      text =
+        "Your current AI spending appears relatively optimized based on the provided inputs.";
+
+    }
+
+    setSummary(text);
+
   };
 
   const generateAudit = () => {
+
     let auditResults = [];
 
     tools.forEach((item) => {
+
       let recommendation = "";
       let savings = 0;
 
       // Rule 1
-      if (item.plan.toLowerCase() === "team" && Number(item.seats) <= 2) {
+      if (
+        item.plan.toLowerCase() === "team" &&
+        Number(item.seats) <= 2
+      ) {
+
         recommendation = "Switch to Plus plan";
         savings = 80;
+
       }
 
       // Rule 2
@@ -70,17 +116,27 @@ function ToolForm() {
         item.tool.toLowerCase() === "claude" &&
         Number(item.spend) > 20
       ) {
+
         recommendation = "Claude Pro may be unnecessary";
         savings = 20;
+
       }
 
       // Rule 3
-      else if (Number(item.seats) > 5) {
+      else if (
+        Number(item.seats) > 5
+      ) {
+
         recommendation = "Reduce unused seats";
         savings = 50;
-      } else {
+
+      }
+
+      else {
+
         recommendation = "Current plan looks optimized";
         savings = 0;
+
       }
 
       auditResults.push({
@@ -89,44 +145,65 @@ function ToolForm() {
         recommendation,
         savings,
       });
-    });
-    const total = auditResults.reduce(
-  (sum, item) => sum + item.savings,
-  0
-);
 
-generateSummary(auditResults, total);
+    });
+
+    const total = auditResults.reduce(
+      (sum, item) => sum + item.savings,
+      0
+    );
+
+    generateSummary(auditResults, total);
+
     setResults(auditResults);
+
   };
 
-  const generateSummary = (auditResults, totalSavings) => {
+  const saveAudit = async () => {
 
-  let text = "";
+    const payload = {
+      email,
+      tools,
+      results,
+      summary,
+      totalSavings,
+    };
 
-  if (totalSavings > 0) {
+    const response = await fetch(
+      "http://localhost:5000/save-audit",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      }
+    );
 
-    text =
-      `Your organization may be overspending on AI subscriptions. ` +
-      `The audit identified approximately $${totalSavings} in potential monthly savings through better plan optimization and reduced overlap between tools.`;
+    const data = await response.json();
 
-  }
+    const generatedUrl =
+  `http://localhost:3000/audit/${data.audit.id}`;
 
-  else {
+setShareUrl(generatedUrl);
 
-    text =
-      "Your current AI spending appears relatively optimized based on the provided inputs.";
+alert("Audit saved successfully!");
 
-  }
+  };
 
-  setSummary(text);
+  const totalSavings = results.reduce(
+    (total, item) => total + item.savings,
+    0
+  );
 
-};
-  const totalSavings = results.reduce((total, item) => total + item.savings, 0);
   return (
+
     <div>
+
       <h2>Enter AI Tool Spending</h2>
 
       {tools.map((item, index) => (
+
         <div
           key={index}
           style={{
@@ -135,6 +212,7 @@ generateSummary(auditResults, total);
             marginBottom: "20px",
           }}
         >
+
           <input
             type="text"
             name="tool"
@@ -188,43 +266,99 @@ generateSummary(auditResults, total);
           >
             Remove
           </button>
+
         </div>
+
       ))}
 
-      <button onClick={addTool}>Add Tool</button>
+      <button onClick={addTool}>
+        Add Tool
+      </button>
 
       <br />
       <br />
 
-      <button onClick={generateAudit}>Generate Audit</button>
-      {results.length === 0 && (
-  <p>
-    No audit generated yet.
-  </p>
+      <button onClick={generateAudit}>
+        Generate Audit
+      </button>
+
+      <br />
+      <br />
+
+      <input
+        type="email"
+        placeholder="Enter your email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        style={{ padding: "10px", width: "300px" }}
+      />
+
+      <br />
+      <br />
+
+      <button onClick={saveAudit}>
+        Save Audit
+      </button>
+
+{shareUrl && (
+
+  <div
+    style={{
+      marginTop: "20px",
+      padding: "15px",
+      border: "1px solid #ccc",
+    }}
+  >
+
+    <h3>Shareable Audit URL</h3>
+
+    <a
+      href={shareUrl}
+      target="_blank"
+      rel="noreferrer"
+    >
+      {shareUrl}
+    </a>
+
+  </div>
+
 )}
 
-<div style={{ marginTop: "30px" }}></div>
+      {results.length === 0 && (
+        <p>
+          No audit generated yet.
+        </p>
+      )}
+
       <div style={{ marginTop: "30px" }}>
-        <h2>Total Monthly Savings: ${totalSavings}</h2>
 
-        <h2>Annual Savings: ${totalSavings * 12}</h2>
+        <h2>
+          Total Monthly Savings: ${totalSavings}
+        </h2>
+
+        <h2>
+          Annual Savings: ${totalSavings * 12}
+        </h2>
+
         <div
-  style={{
-    border: "1px solid #ccc",
-    padding: "20px",
-    marginBottom: "20px",
-    backgroundColor: "#f5f5f5"
-  }}
->
+          style={{
+            border: "1px solid #ccc",
+            padding: "20px",
+            marginBottom: "20px",
+            backgroundColor: "#f5f5f5"
+          }}
+        >
 
-  <h2>AI Generated Summary</h2>
+          <h2>AI Generated Summary</h2>
 
-  <p>{summary}</p>
+          <p>{summary}</p>
 
-</div>
+        </div>
+
         <h2>Audit Results</h2>
 
         {results.map((result, index) => (
+
           <div
             key={index}
             style={{
@@ -233,24 +367,33 @@ generateSummary(auditResults, total);
               marginBottom: "15px",
             }}
           >
-           <h3>
-  {result.tool} — {result.plan}
-</h3>
+
+            <h3>
+              {result.tool} — {result.plan}
+            </h3>
 
             <p>
               Recommendation:
               {result.recommendation}
             </p>
 
-            <p>Potential Savings:
-<strong>
-  ${result.savings}/month
-</strong></p>
+            <p>
+              Potential Savings:
+              <strong>
+                ${result.savings}/month
+              </strong>
+            </p>
+
           </div>
+
         ))}
+
       </div>
+
     </div>
+
   );
+
 }
 
 export default ToolForm;

@@ -172,15 +172,14 @@ Stored data includes:
 - Tool recommendations
 - AI-generated summary
 
+Currently, audit reports are temporarily persisted using an in-memory Express storage layer during MVP development. Firebase or Supabase integration is planned for production persistence.
 ---
 
 ## Step 7 — Public Shareable URL
-A public URL is generated.
+Each audit is assigned a UUID-based identifier which allows generation of unique public report URLs.
 
 Example:
-/audit/abc123
-
-Sensitive information such as emails and company names are excluded from public views.
+http://localhost:3000/audit/abc123
 
 ---
 
@@ -207,7 +206,7 @@ Sensitive information such as emails and company names are excluded from public 
 
 ---
 
-# Current Progress (Day 4)
+# Current Progress (Day 5)
 
 ## Completed
 - React frontend setup
@@ -222,12 +221,17 @@ Sensitive information such as emails and company names are excluded from public 
 - AI-generated summary system
 - Improved results UI
 - Empty audit state handling
+- Email capture system
+- Express backend save API
+- UUID-based audit generation
+- Shareable audit URL generation
+- Frontend-backend integration
 
 ## In Progress
-- Backend API integration
-- Database setup
-- Public shareable URLs
-- Email capture flow
+- Public audit result pages
+- Persistent database integration
+- Shareable report rendering
+- Transactional email support
 
 ## Planned
 - Transactional email support

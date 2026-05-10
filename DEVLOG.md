@@ -77,3 +77,24 @@ Blockers / what I'm stuck on:
 
 Plan for tomorrow:
 - Database integration and shareable audit URLs
+
+
+## Day 5 — 2026-05-10
+
+Hours worked: 4
+
+What I did:
+- Built Express backend server
+- Added audit persistence API
+- Implemented email capture
+- Added shareable audit URLs
+- Connected frontend and backend
+
+What I learned:
+- Better understanding of frontend-backend communication
+
+Blockers / what I'm stuck on:
+- Need proper database integration next
+
+Plan for tomorrow:
+- Improve deployment and complete documentation

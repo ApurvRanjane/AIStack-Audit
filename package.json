@@ -1,0 +1,20 @@
+{
+  "name": "aistack-audit",
+  "version": "1.0.0",
+  "description": "AIStack Audit is a web application that helps users analyze AI subscription spending and discover potential savings opportunities.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ApurvRanjane/AIStack-Audit.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ApurvRanjane/AIStack-Audit/issues"
+  },
+  "homepage": "https://github.com/ApurvRanjane/AIStack-Audit#readme"
+}
