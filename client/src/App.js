@@ -1,16 +1,33 @@
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
+
 import ToolForm from "./components/ToolForm";
+import AuditPage from "./pages/AuditPage";
 
 function App() {
 
   return (
 
-    <div style={{ padding: "40px" }}>
+    <BrowserRouter>
 
-      <h1>AIStack Audit</h1>
+      <Routes>
 
-      <ToolForm />
+        <Route
+          path="/"
+          element={<ToolForm />}
+        />
 
-    </div>
+        <Route
+          path="/audit/:id"
+          element={<AuditPage />}
+        />
+
+      </Routes>
+
+    </BrowserRouter>
 
   );
 

@@ -98,3 +98,25 @@ Blockers / what I'm stuck on:
 
 Plan for tomorrow:
 - Improve deployment and complete documentation
+
+
+
+## Day 6 — 2026-05-11
+
+Hours worked: 5
+
+What I did:
+- Added React Router
+- Built public audit pages
+- Created dynamic audit routes
+- Added backend fetch API
+- Connected public shareable reports
+
+What I learned:
+- Better understanding of dynamic routing and frontend-backend integration
+
+Blockers / what I'm stuck on:
+- Need deployment and production polish
+
+Plan for tomorrow:
+- Final deployment, cleanup, and documentation polish

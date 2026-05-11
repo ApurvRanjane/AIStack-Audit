@@ -10,3 +10,10 @@ AIStack Audit is a web application that helps users analyze AI subscription spen
 - Email capture
 - Shareable audit URLs
 - Express backend API
+
+## Shareable Reports
+
+Every saved audit generates a unique public URL that can be shared externally.
+
+Example:
+http://localhost:3000/audit/:id

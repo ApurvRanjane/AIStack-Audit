@@ -29,6 +29,24 @@ app.post("/save-audit", (req, res) => {
 
 });
 
+app.get("/audit/:id", (req, res) => {
+
+  const audit = audits.find(
+    (item) => item.id === req.params.id
+  );
+
+  if (!audit) {
+
+    return res.status(404).json({
+      error: "Audit not found",
+    });
+
+  }
+
+  res.json(audit);
+
+});
+
 app.listen(5000, () => {
   console.log("Server running on port 5000");
 });

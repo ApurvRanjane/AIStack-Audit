@@ -76,6 +76,9 @@ Main responsibilities:
 - Showing total savings
 - Capturing user email addresses
 - Rendering public audit result pages
+- Dynamic public audit routing using React Router
+- Fetching audit reports using route parameters
+- Rendering public shareable audit pages
 
 ---
 
@@ -176,10 +179,21 @@ Currently, audit reports are temporarily persisted using an in-memory Express st
 ---
 
 ## Step 7 — Public Shareable URL
+
 Each audit is assigned a UUID-based identifier which allows generation of unique public report URLs.
 
 Example:
 http://localhost:3000/audit/abc123
+
+The frontend uses React Router dynamic routes to render saved audit reports publicly.
+
+Example Route:
+Route path="/audit/:id"
+
+The backend exposes a GET API endpoint for retrieving saved audit reports by UUID.
+
+Example:
+GET /audit/:id
 
 ---
 
@@ -206,7 +220,7 @@ http://localhost:3000/audit/abc123
 
 ---
 
-# Current Progress (Day 5)
+# Current Progress (Day 6)
 
 ## Completed
 - React frontend setup
@@ -226,12 +240,17 @@ http://localhost:3000/audit/abc123
 - UUID-based audit generation
 - Shareable audit URL generation
 - Frontend-backend integration
+- React Router integration
+- Dynamic audit result pages
+- Backend audit fetch API
+- Public shareable report rendering
+
 
 ## In Progress
-- Public audit result pages
 - Persistent database integration
-- Shareable report rendering
+- Open Graph metadata generation
 - Transactional email support
+- Deployment optimization
 
 ## Planned
 - Transactional email support
