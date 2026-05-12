@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 
 function ToolForm() {
-
   const [tools, setTools] = useState(() => {
-
     const savedTools = localStorage.getItem("tools");
 
     return savedTools
@@ -17,7 +15,6 @@ function ToolForm() {
             useCase: "",
           },
         ];
-
   });
 
   const [results, setResults] = useState([]);
@@ -28,23 +25,18 @@ function ToolForm() {
   const [shareUrl, setShareUrl] = useState("");
 
   useEffect(() => {
-
     localStorage.setItem("tools", JSON.stringify(tools));
-
   }, [tools]);
 
   const handleChange = (index, event) => {
-
     const values = [...tools];
 
     values[index][event.target.name] = event.target.value;
 
     setTools(values);
-
   };
 
   const addTool = () => {
-
     setTools([
       ...tools,
       {
@@ -55,60 +47,42 @@ function ToolForm() {
         useCase: "",
       },
     ]);
-
   };
 
   const removeTool = (index) => {
-
     const values = [...tools];
 
     values.splice(index, 1);
 
     setTools(values);
-
   };
 
   const generateSummary = (auditResults, totalSavings) => {
-
     let text = "";
 
     if (totalSavings > 0) {
-
       text =
         `Your organization may be overspending on AI subscriptions. ` +
         `The audit identified approximately $${totalSavings} in potential monthly savings through better plan optimization and reduced overlap between tools.`;
-
-    }
-
-    else {
-
+    } else {
       text =
         "Your current AI spending appears relatively optimized based on the provided inputs.";
-
     }
 
     setSummary(text);
-
   };
 
   const generateAudit = () => {
-
     let auditResults = [];
 
     tools.forEach((item) => {
-
       let recommendation = "";
       let savings = 0;
 
       // Rule 1
-      if (
-        item.plan.toLowerCase() === "team" &&
-        Number(item.seats) <= 2
-      ) {
-
+      if (item.plan.toLowerCase() === "team" && Number(item.seats) <= 2) {
         recommendation = "Switch to Plus plan";
         savings = 80;
-
       }
 
       // Rule 2
@@ -116,27 +90,17 @@ function ToolForm() {
         item.tool.toLowerCase() === "claude" &&
         Number(item.spend) > 20
       ) {
-
         recommendation = "Claude Pro may be unnecessary";
         savings = 20;
-
       }
 
       // Rule 3
-      else if (
-        Number(item.seats) > 5
-      ) {
-
+      else if (Number(item.seats) > 5) {
         recommendation = "Reduce unused seats";
         savings = 50;
-
-      }
-
-      else {
-
+      } else {
         recommendation = "Current plan looks optimized";
         savings = 0;
-
       }
 
       auditResults.push({
@@ -145,22 +109,16 @@ function ToolForm() {
         recommendation,
         savings,
       });
-
     });
 
-    const total = auditResults.reduce(
-      (sum, item) => sum + item.savings,
-      0
-    );
+    const total = auditResults.reduce((sum, item) => sum + item.savings, 0);
 
     generateSummary(auditResults, total);
 
     setResults(auditResults);
-
   };
 
   const saveAudit = async () => {
-
     const payload = {
       email,
       tools,
@@ -169,50 +127,67 @@ function ToolForm() {
       totalSavings,
     };
 
-    const response = await fetch(
-      "http://localhost:5000/save-audit",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      }
-    );
+    const response = await fetch("http://localhost:5000/save-audit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
 
     const data = await response.json();
 
-    const generatedUrl =
-  `http://localhost:3000/audit/${data.audit.id}`;
+    const generatedUrl = `http://localhost:3000/audit/${data.audit.id}`;
 
-setShareUrl(generatedUrl);
+    setShareUrl(generatedUrl);
 
-alert("Audit saved successfully!");
-
+    alert("Audit saved successfully!");
   };
 
-  const totalSavings = results.reduce(
-    (total, item) => total + item.savings,
-    0
-  );
+  const totalSavings = results.reduce((total, item) => total + item.savings, 0);
 
   return (
+    <div
+      style={{
+        maxWidth: "900px",
+        margin: "40px auto",
+        padding: "30px",
+        backgroundColor: "white",
+        borderRadius: "12px",
+        boxShadow: "0 2px 10px rgba(0,0,0,0.08)",
+      }}
+    >
+      <h1
+        style={{
+          fontSize: "40px",
+          marginBottom: "10px",
+        }}
+      >
+        AIStack Audit
+      </h1>
 
-    <div>
-
+      <p
+        style={{
+          color: "#555",
+          marginBottom: "30px",
+        }}
+      >
+        Analyze your AI subscriptions, identify overspending, and discover
+        optimization opportunities instantly.
+      </p>
       <h2>Enter AI Tool Spending</h2>
 
       {tools.map((item, index) => (
-
         <div
           key={index}
           style={{
-            border: "1px solid #ccc",
+            border: "1px solid #e5e7eb",
+            borderRadius: "10px",
+            backgroundColor: "#fafafa",
             padding: "20px",
             marginBottom: "20px",
           }}
         >
-
           <input
             type="text"
             name="tool"
@@ -266,21 +241,15 @@ alert("Audit saved successfully!");
           >
             Remove
           </button>
-
         </div>
-
       ))}
 
-      <button onClick={addTool}>
-        Add Tool
-      </button>
+      <button onClick={addTool}>Add Tool</button>
 
       <br />
       <br />
 
-      <button onClick={generateAudit}>
-        Generate Audit
-      </button>
+      <button onClick={generateAudit}>Generate Audit</button>
 
       <br />
       <br />
@@ -296,78 +265,58 @@ alert("Audit saved successfully!");
       <br />
       <br />
 
-      <button onClick={saveAudit}>
-        Save Audit
-      </button>
+      <button onClick={saveAudit}>Save Audit</button>
 
-{shareUrl && (
+      {shareUrl && (
+        <div
+          style={{
+            marginTop: "20px",
+            padding: "15px",
+            border: "1px solid #ccc",
+          }}
+        >
+          <h3>Shareable Audit URL</h3>
 
-  <div
-    style={{
-      marginTop: "20px",
-      padding: "15px",
-      border: "1px solid #ccc",
-    }}
-  >
-
-    <h3>Shareable Audit URL</h3>
-
-    <a
-      href={shareUrl}
-      target="_blank"
-      rel="noreferrer"
-    >
-      {shareUrl}
-    </a>
-
-  </div>
-
-)}
-
-      {results.length === 0 && (
-        <p>
-          No audit generated yet.
-        </p>
+          <a href={shareUrl} target="_blank" rel="noreferrer">
+            {shareUrl}
+          </a>
+        </div>
       )}
 
+      {results.length === 0 && <p>No audit generated yet.</p>}
+
       <div style={{ marginTop: "30px" }}>
+        <h2>Total Monthly Savings: ${totalSavings}</h2>
 
-        <h2>
-          Total Monthly Savings: ${totalSavings}
-        </h2>
-
-        <h2>
-          Annual Savings: ${totalSavings * 12}
-        </h2>
+        <h2>Annual Savings: ${totalSavings * 12}</h2>
 
         <div
           style={{
             border: "1px solid #ccc",
             padding: "20px",
             marginBottom: "20px",
-            backgroundColor: "#f5f5f5"
+            backgroundColor: "#f5f5f5",
           }}
         >
-
           <h2>AI Generated Summary</h2>
 
           <p>{summary}</p>
-
         </div>
 
         <h2>Audit Results</h2>
 
         {results.map((result, index) => (
-
           <div
             key={index}
             style={{
-              border: "1px solid #ccc",
-              padding: "15px",
-              marginBottom: "15px",
-            }}
+  border: "1px solid #ccc",
+  padding: "15px",
+  marginBottom: "15px",
+  borderRadius: "10px",
+  backgroundColor: "#ffffff",
+  boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
+}}
           >
-
             <h3>
               {result.tool} — {result.plan}
             </h3>
@@ -379,21 +328,13 @@ alert("Audit saved successfully!");
 
             <p>
               Potential Savings:
-              <strong>
-                ${result.savings}/month
-              </strong>
+              <strong>${result.savings}/month</strong>
             </p>
-
           </div>
-
         ))}
-
       </div>
-
     </div>
-
   );
-
 }
 
 export default ToolForm;
