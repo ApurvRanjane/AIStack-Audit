@@ -10,9 +10,7 @@ function AuditPage() {
 
   useEffect(() => {
 
-    fetch(
-      `http://localhost:5000/audit/${id}`
-    )
+    fetch(`https://aistack-audit-backend.onrender.com/audit/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setAudit(data);

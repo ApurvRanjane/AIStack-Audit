@@ -127,7 +127,7 @@ function ToolForm() {
       totalSavings,
     };
 
-    const response = await fetch("http://localhost:5000/save-audit", {
+    const response = await fetch("https://aistack-audit-backend.onrender.com/save-audit", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -286,7 +286,14 @@ function ToolForm() {
       {results.length === 0 && <p>No audit generated yet.</p>}
 
       <div style={{ marginTop: "30px" }}>
-        <h2>Total Monthly Savings: ${totalSavings}</h2>
+        <h2
+          style={{
+            color: "#16a34a",
+            fontSize: "32px",
+          }}
+        >
+          Total Monthly Savings: ${totalSavings}
+        </h2>
 
         <h2>Annual Savings: ${totalSavings * 12}</h2>
 
@@ -309,13 +316,13 @@ function ToolForm() {
           <div
             key={index}
             style={{
-  border: "1px solid #ccc",
-  padding: "15px",
-  marginBottom: "15px",
-  borderRadius: "10px",
-  backgroundColor: "#ffffff",
-  boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
-}}
+              border: "1px solid #ccc",
+              padding: "15px",
+              marginBottom: "15px",
+              borderRadius: "10px",
+              backgroundColor: "#ffffff",
+              boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
+            }}
           >
             <h3>
               {result.tool} — {result.plan}
