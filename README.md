@@ -17,3 +17,10 @@ Every saved audit generates a unique public URL that can be shared externally.
 
 Example:
 http://localhost:3000/audit/:id
+
+
+Frontend:
+https://ai-stack-audit-zeta.vercel.app/
+
+Backend:
+https://aistack-audit-backend.onrender.com
