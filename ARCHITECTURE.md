@@ -11,7 +11,7 @@ The platform acts as an AI subscription optimization tool where users can:
 - Generate AI-powered audit summaries
 - Save and share audit reports
 
-The goal of the project is to simulate a real SaaS-style lead generation product that Credex could plausibly ship.
+The goal of the project is to simulate a real SaaS-style AI cost optimization product with practical business and engineering considerations.
 
 ---
 
@@ -183,7 +183,7 @@ Currently, audit reports are temporarily persisted using an in-memory Express st
 Each audit is assigned a UUID-based identifier which allows generation of unique public report URLs.
 
 Example:
-http://localhost:3000/audit/abc123
+https://ai-stack-audit-zeta.vercel.app/audit/abc123
 
 The frontend uses React Router dynamic routes to render saved audit reports publicly.
 
@@ -254,7 +254,7 @@ GET /audit/:id
 ## In Progress
 - Production database integration
 - Real transactional email delivery
-- Production deployment configuration
+- Production monitoring and scaling improvements
 
 ## Planned
 - Automated testing workflows
