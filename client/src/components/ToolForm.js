@@ -137,7 +137,7 @@ function ToolForm() {
 
     const data = await response.json();
 
-    const generatedUrl = `http://localhost:3000/audit/${data.audit.id}`;
+    const generatedUrl = `https://ai-stack-audit-zeta.vercel.app/audit/${data.audit.id}`;
 
     setShareUrl(generatedUrl);
 
