@@ -132,16 +132,19 @@ What I did:
 - Added SEO metadata and Open Graph tags
 - Enhanced landing page structure
 - Added user interview research documentation
-- Completed README and final project documentation
+- Completed README and final documentation
 - Improved architecture documentation
-- Prepared deployment workflow
-- Finalized project structure and cleanup
+- Deployed backend using Render
+- Deployed frontend using Vercel
+- Connected production frontend and backend APIs
+- Tested public shareable audit routes
+- Added project screenshots and live demo links
 
 What I learned:
-- Better understanding of SaaS product presentation, SEO optimization, user validation, and production-ready project organization
+- Better understanding of deployment workflows, production environments, SaaS presentation, SEO optimization, and full-stack project delivery
 
 Blockers / what I'm stuck on:
-- Production database integration and transactional email automation can be improved further in future versions
+- Production database persistence and transactional email automation can be improved further in future versions
 
 Plan for tomorrow:
-- Project completed and ready for deployment/submission
+- Project completed and ready for submission
